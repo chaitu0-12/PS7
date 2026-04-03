@@ -10,6 +10,33 @@ This project uses a pre-trained **InceptionV3** Deep Learning model that achieve
 
 The project is split into two straightforward parts:
 
+### 🏗️ System Architecture
+
+Below is the high-level architecture of the **VisionAI** platform:
+
+```mermaid
+graph TD
+    subgraph Client_Side [Client Side]
+        A[User Interface] -->|Upload Image| B[React Frontend]
+        B -->|Fetch Predictions| C[Browser]
+    end
+
+    subgraph Server_Side [Server Side]
+        C -->|POST /predict| D[Flask API]
+        D -->|Process Image| E[InceptionV3 Model]
+        E -->|Return AI Probability| D
+        D -->|JSON Response| C
+    end
+
+    B -->|Display Result| A
+```
+
+- **Frontend:** Built with React, Vite, and Tailwind CSS. It manages the user session, image previewing, and result visualization.
+- **Backend:** A Python Flask server that acts as an API bridge to the deep learning model.
+- **Model:** A pre-trained InceptionV3 Keras model (`.h5`) that performs binary classification (Real vs Fake).
+
+---
+
 ### 1. The Frontend (React + Vite)
 - **Location:** The `/frontend` directory.
 - **Tech Stack:** React, TypeScript, Vite, Tailwind CSS, Framer Motion, Recharts.
