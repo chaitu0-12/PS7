@@ -34,6 +34,22 @@ def preprocess_image(image, target_size=(299, 299)):
     
     return img_array
 
+@app.route('/', methods=['GET'])
+def root():
+    return jsonify({
+        "status": "ok",
+        "message": "PS7 backend is running",
+        "predict_endpoint": "/predict",
+        "predict_method": "POST"
+    }), 200
+
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({
+        "status": "ok",
+        "model_loaded": model is not None
+    }), 200
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if model is None:
